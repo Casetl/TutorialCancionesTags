@@ -1,13 +1,7 @@
-name: CI
-
-# Controls when the action will run. 
+name: Pruebas unitarias
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    branches: [ master ]
 jobs:
   job1:
     name: Pruebas
@@ -25,4 +19,9 @@ jobs:
         pip install -r requirements.txt
     - name: Correr pruebas
       id: correr-pruebas
-      run: python -m unittest discover -s tests
+      run: python -m unittest -v tests/test_persona.py
+    - name: Cálculo de cubrimiento
+      id: cubrimiento
+      run: |
+          coverage run -m unittest tests/test_persona.py
+          coverage report -m
